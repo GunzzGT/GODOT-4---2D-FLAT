@@ -9,7 +9,7 @@ radius = 70.6045
 [node name="Node" type="Node"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-position = Vector2(487, 292)
+position = Vector2(500, 300)
 script = ExtResource("1_nryp3")
 metadata/_edit_group_ = true
 
@@ -18,3 +18,12 @@ texture = ExtResource("2_wirjc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("CircleShape2D_ufn1t")
+
+[node name="Marker2D" type="Marker2D" parent="CharacterBody2D"]
+position = Vector2(0, -75)
+scale = Vector2(0.5, 0.5)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D/Marker2D"]
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("2_wirjc")

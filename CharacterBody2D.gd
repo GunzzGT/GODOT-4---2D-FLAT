@@ -18,22 +18,33 @@ func _physics_process(_delta):
 	if direction:
 		velocity = direction * SPEED
 		
-		# scuffed function to determine sprite rotation
-		# not direction because I don't know how to define which is forward or backwards from the node
+		# fixed scuffed rotation function
+		
+		# no longer just flipping the Sprite2D child node
+		# previously only flipped Sprite2D node, fixed to flip the entire node by calling "self"
+		# finally figured out why calling CharacterBody2D to flip does not work, just use "self" next time
+		# note that ($Sprite2D.flip_h and .flip_v can still come in handy to make sprite point to different direction)
+		# .flip_h or .flip_v use boolean
+		# $ sign mean get node, $Sprite2D means get sprite2d child node of current node
+		
 		if velocity.x != 0:
-			# vertical flip false should not be needed here actually ($Sprite2D.flip_v = false) deleted
 			if velocity.x < 0:
-				$Sprite2D.rotation_degrees = 90
+				self.rotation_degrees = 270
 			else:
-				$Sprite2D.rotation_degrees = 270
+				self.rotation_degrees = 90
 				# since horizontal flip does not make notable difference (sprite shape kind of mirrored vertically)
 				# if less than 0 = true means left and vice versa
 		elif velocity.y != 0:
-			$Sprite2D.rotation_degrees = 0
+			if velocity.y < 0:
+				self.rotation_degrees = 0
 			# set rotation back to neutral
-			$Sprite2D.flip_v = velocity.y > 0
-			# flip vertically, for now decide that the top of the sprite (top of the head) is "forward" in sprite only, not actual usable direction
+			else:
+				self.rotation_degrees = 180
+			# fully handle pointing direction with rotation_degrees for now
+			# top of the sprite (top of the head) is "forward"
 		
+		# attached Marker2D node with sprite, finally usable pointing direction
+			
 	else:
 		velocity = Vector2.ZERO
 		# velocity.x = move_toward(velocity.x, 0, SPEED)
